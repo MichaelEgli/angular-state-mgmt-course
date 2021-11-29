@@ -3,10 +3,10 @@ import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { todoFeatureKey, State } from './todo.reducer';
 
 // TODO 1: create feature selector for the todo feature key
-export const selectTodoFeature = undefined;
+export const selectTodoFeature = createFeatureSelector<State>(todoFeatureKey);
 
 // TODO 2: create "selectTodoFilter" selector to select "todoFilter" state property
-export const selectTodoFilter = undefined;
+export const selectTodoFilter = createSelector(selectTodoFeature, state => state.todoFilter);
 
 // TODO 3: create "selectTodos" selector to select todo items as an array (please return only items which are valid based on active filter)
 export const selectTodos = undefined;
