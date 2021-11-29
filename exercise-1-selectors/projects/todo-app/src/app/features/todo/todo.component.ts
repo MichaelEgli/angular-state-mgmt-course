@@ -15,6 +15,7 @@ import {
 } from './state/todo.actions';
 import {
   selectEditedTodo,
+  selectTodoFeature,
   selectTodoFilter,
   selectTodos,
   selectTodosCount
@@ -38,10 +39,10 @@ export class TodoComponent implements OnInit {
 
   ngOnInit() {
     // TODO 6: use selectors instead of hardcoded values (use pipe form of select)
-    this.todos = of([]);
-    this.todosCount = of(0);
-    this.todosFilter = of('ALL');
-    this.todosEditedTodo = of(null);
+    this.todos = this.store.pipe(select(selectTodos));
+    this.todosCount = this.store.pipe(select(selectTodosCount));
+    this.todosFilter = this.store.pipe(select(selectTodoFilter));
+    this.todosEditedTodo = this.store.pipe(select(selectEditedTodo));
 
     // TODO 7: try to run npm run watch to run the tests and see if the component tests are passing
   }
