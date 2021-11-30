@@ -14,7 +14,7 @@ import { TodoEditorComponent } from './todo-editor/todo-editor.component';
   imports: [
     SharedModule,
     TodoRoutingModule,
-    // TODO 9: add "StoreModule.forFeature" to the imports and pass in arguments it expects
+    StoreModule.forFeature(fromTodo.todoFeatureKey, fromTodo.reducer)
   ]
 })
 export class TodoModule {}
