@@ -119,11 +119,42 @@ const todoReducer = createReducer(
             }
         };
         delete newState.items[id];
-        if (newState.editedTodoId === id) {
+/*         if (newState.editedTodoId === id) {
             newState.editedTodoId = null;
-        }
+        } */
         return newState;
     }),
+
+    on(TodoActions.editTodo, (state, { id }) => ({
+        ...state,
+        editedTodoId: id
+    })),
+
+    on(TodoActions.cancelEditTodo, (state) => ({
+        ...state,
+        editedTodoId: null
+    })),
+
+    on(TodoActions.updateTodo, (state, { todo }) => ({
+        ...state,
+        items: {
+            ...state.items,
+            [todo.id]: todo
+        },
+        editedTodoId: null
+    })),
+
+    on(TodoActions.removeDoneTodos, state => {
+        const notDoneIds = Object.values(state.items)
+        .filter(item => !item.done)
+        .map(item => item.id);
+        return {
+            ...state,
+            items: notDoneIds.reduce((result, nextId) => {
+                result[nextId] = state.items[nextId];
+            }, {})
+        };
+    })
 );
 
 export function reducer(state: State | undefined, action: Action) {
