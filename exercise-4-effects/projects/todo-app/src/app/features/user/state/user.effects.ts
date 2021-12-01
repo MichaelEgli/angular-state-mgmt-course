@@ -91,7 +91,23 @@ export class UserEffects {
   );
 
   // TODO 10: implement steps 1 - 7 for "editUserSave$" effect (works very similarly, mind using correct flattening stream operator)
-  editUserSave$ = undefined;
+  editUserSave$ = createEffect(() => 
+  this.actions$.pipe(
+    ofType(UserActions.editUserSave),
+    concatMap(({ user }) => 
+      this.userIntegrationService.update(user).pipe(
+        map(editedUser => UserActions.editUserSaveSuccess({ user: editedUser })),
+        catchError(error =>
+          of(
+            UserActions.editUserSaveFailure({
+              error: `Edit users failed: ${error}`
+            })
+          )
+        )
+      )
+    )
+  )
+);
 
   // TODO 11: implement steps 1 - 7 for "removeUser$" effect (works very similarly, mind using correct flattening stream operator)
   removeUser$ = undefined;
