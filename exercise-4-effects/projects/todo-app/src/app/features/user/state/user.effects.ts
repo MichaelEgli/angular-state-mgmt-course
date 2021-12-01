@@ -72,7 +72,23 @@ export class UserEffects {
 );
 
   // TODO 9: implement steps 1 - 7 for "createUser$" effect (works very similarly, mind using correct flattening stream operator)
-  createUser$ = undefined;
+  createUser$ = createEffect(() =>
+  this.actions$.pipe(
+    ofType(UserActions.createUser),
+    concatMap(({ username, name, surname }) =>
+      this.userIntegrationService.create({ username, name, surname }).pipe(
+        map(user => UserActions.createUserSuccess({ user })),
+        catchError(error =>
+          of(
+            UserActions.loadUsersFailure({
+              error: `Create user failed: ${error}`
+            })
+          )
+        )
+      )
+    )
+  )
+  );
 
   // TODO 10: implement steps 1 - 7 for "editUserSave$" effect (works very similarly, mind using correct flattening stream operator)
   editUserSave$ = undefined;
