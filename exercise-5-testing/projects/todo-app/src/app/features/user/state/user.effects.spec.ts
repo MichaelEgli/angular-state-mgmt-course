@@ -51,6 +51,7 @@ describe('UserEffects', () => {
     // TODO 14: pass in object as a second parameter of "cold", object will contain "a" property (based on "a" event) with the desired service response ( users array )
     // TODO 15: use "expectObservable" and pass in "effects.loadUsers$" effect and expect it "toBe" stream with sum of empty frames of previous 2 streams followed by "a" event
     // TODO 16: pass in object as a second parameter of "toBe", object will contain "a" property (based on "a" event) with expected result success action with appropriate payload (because backend request succeeded)
+    scheduler.run(() => {})
   });
 
   it('loads users with failed backend request', () => {
