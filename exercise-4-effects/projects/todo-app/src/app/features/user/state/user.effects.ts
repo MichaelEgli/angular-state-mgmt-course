@@ -27,6 +27,7 @@ import {
   removeUserSuccess
 } from './user.actions';
 import { selectIsAdmin } from './user.selectors';
+import * as UserActions from './user.actions';
 
 @Injectable()
 export class UserEffects {
@@ -36,7 +37,6 @@ export class UserEffects {
   ) {}
 
   // TODO 1: create "loadUsers$" using "createEffect" NgRx factory
-  loadUsers$ = undefined;
 
   // TODO 2: effect is an arrow function which returns a stream of "actions$" with additional operators in pipe
 
@@ -52,6 +52,24 @@ export class UserEffects {
   // where we will pass in error as string (using ".toString()") (in nested pipe, relative to service)
 
   // let's review what you have until now together, also the 8th step is in user.module.ts file
+
+  loadUsers$ = createEffect(() => 
+  this.actions$.pipe(
+    ofType(UserActions.loadUsers),
+    switchMap(() => 
+      this.userIntegrationService.load().pipe(
+        map(users => UserActions.loadUsersSuccess({ users})),
+        catchError(error =>
+          of(
+            UserActions.loadUsersFailure({
+              error: `Loading users failed: ${error}`
+            })
+          )
+        )
+      )
+    )
+  )
+);
 
   // TODO 9: implement steps 1 - 7 for "createUser$" effect (works very similarly, mind using correct flattening stream operator)
   createUser$ = undefined;
