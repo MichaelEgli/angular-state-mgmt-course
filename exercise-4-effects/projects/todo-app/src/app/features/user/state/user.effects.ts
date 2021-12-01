@@ -110,7 +110,23 @@ export class UserEffects {
 );
 
   // TODO 11: implement steps 1 - 7 for "removeUser$" effect (works very similarly, mind using correct flattening stream operator)
-  removeUser$ = undefined;
+  removeUser$ = createEffect(() => 
+  this.actions$.pipe(
+    ofType(UserActions.removeUser),
+    concatMap(({ id }) => 
+      this.userIntegrationService.remove(id).pipe(
+        map(() => UserActions.removeUserSuccess({ id })),
+        catchError(error =>
+          of(
+            UserActions.removeUserFailure({
+              error: `Remove users failed: ${error}`
+            })
+          )
+        )
+      )
+    )
+  )
+);
 
   // TODO 12: for "loadUsers$": inject store into the service (class) - Tests are no longer relevant
 
