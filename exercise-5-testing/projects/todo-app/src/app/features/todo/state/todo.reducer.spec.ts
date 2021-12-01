@@ -1,5 +1,5 @@
 import uuid from 'uuid/v4';
-import { reducer, State } from './todo.reducer';
+import { initialState, reducer, State } from './todo.reducer';
 import {
   addTodo,
   editTodo,
@@ -47,6 +47,17 @@ describe('Todo Reducer', () => {
     it('should add todo', () => {
       // TODO 2: add reducer test for handler that handles "addTodoWithId" action by creating action and applying it to reducer
       // resulting state should contain new todo with specified title (get inspiration from the first test)
+      const action = addTodo({title: 'Test'});
+
+      const result = reducer(initialState, action);
+
+      const ids = Object.keys(result.items);
+      expect(ids.length).toBe(5);
+      expect(result.items[ids[4]]).toEqual({
+        id: ids[4],
+        title: 'Test',
+        done: false
+        });
     });
   });
 
