@@ -96,7 +96,7 @@ export class UserEffects {
   // TODO 11: implement steps 1 - 7 for "removeUser$" effect (works very similarly, mind using correct flattening stream operator)
   removeUser$ = undefined;
 
-  // TODO 12: for "loadUsers$": inject store into the service
+  // TODO 12: for "loadUsers$": inject store into the service (class) - Tests are no longer relevant
 
   // TODO 13: for "loadUsers$": add additional "concatMap" after "ofType" operator
 
