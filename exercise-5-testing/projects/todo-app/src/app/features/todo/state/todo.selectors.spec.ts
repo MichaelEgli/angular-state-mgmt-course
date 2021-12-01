@@ -14,6 +14,11 @@ describe('Todo selectors', () => {
       // projector might not get proper IDE type support depending on editor
       // in that case, please check what you pass into selector in its implementation to know what test data you have to create
       // feel free to use "initialState" for all the cases when you need to pass in feature state
+      const result = selectTodos
+      .projector(initialState, 'ALL');
+      expect(result.length).toBe(4);
+      expect(result[0].title).toBe('Sign up for NgRx workshop');
+      expect(result[0].done).toBe(true);
     });
 
     it('returns done todos with DONE filter', () => {
