@@ -5,6 +5,7 @@ import {
   selectTodosCount
 } from './todo.selectors';
 import { initialState } from './todo.reducer';
+import { Todo } from '../state/todo.model';
 
 describe('Todo selectors', () => {
   describe('selectTodos', () => {
@@ -23,6 +24,10 @@ describe('Todo selectors', () => {
 
     it('returns done todos with DONE filter', () => {
       // TODO 5: implement all selector tests
+      const result = selectTodos
+      .projector(initialState, 'DONE');
+      expect(result.length).toBe(1);
+      expect(result).not.toContain('"done": true');
     });
 
     it('returns active todos with ACTIVE filter', () => {});
