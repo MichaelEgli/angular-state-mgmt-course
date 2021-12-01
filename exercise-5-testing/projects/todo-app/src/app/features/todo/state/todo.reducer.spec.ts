@@ -11,6 +11,7 @@ import {
   cancelEditTodo,
   addTodoWithId
 } from './todo.actions';
+import { Store } from '@ngrx/store';
 
 const id1 = uuid();
 const id2 = uuid();
@@ -61,17 +62,23 @@ describe('Todo Reducer', () => {
     });
   });
 
-  describe('toggle todo action', () => {
+/*   describe('toggle todo action', () => {
     it('should toggle todo', () => {
       // TODO 3: implement all reducer tests
     });
   });
-
+ */
   describe('remove todo action', () => {
-    it('should remove todo', () => {});
+    it('should remove todo', () => {
+      const id = Object.keys(initialState.items)[0];
+      const action = removeTodo({ id });
+      const result = reducer(initialState, action);
+      const ids = Object.keys(result.items);
+      expect(ids.length).toBe(3);
+    });
   });
 
-  describe('remove done todos action', () => {
+/*   describe('remove done todos action', () => {
     it('should remove done todos', () => {});
   });
 
@@ -89,5 +96,5 @@ describe('Todo Reducer', () => {
 
   describe('update todo', () => {
     it('should update todo', () => {});
-  });
+  }); */
 });
