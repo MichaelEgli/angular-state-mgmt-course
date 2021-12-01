@@ -55,18 +55,33 @@ describe('TodoComponent', () => {
     fixture = TestBed.createComponent(TodoComponent);
     component = fixture.componentInstance;
     store = TestBed.inject(MockStore);
-
+  });
+  
+  it('should render todos', () => {
     // TODO 6: override all selectors used in component with some test data and call "fixture.detectChanges")
     // when overriding selectors, assign overridden selector to a variable (eg "mockSelectTodos") which will be declared at the top of the test and re-assigned for every new test in before each
     // the selector variable will be of typed based on what it should return
     // eg "MemoizedSelector<State, TodoFilter>" for mockSelectTodoFilter
-  });
+    store.overrideSelector(selectTodos, [
+      { id: '1', title: 'Test 1', done: true },
+      { id: '2', title: 'Test 2', done: false },
+    ]);
+    store.overrideSelector(selectTodosCount, 2);
+    store.overrideSelector(selectTodoFilter, 'ALL');
+    store.overrideSelector(selectEditedTodo, null);
+    fixture.detectChanges();
 
-  it('should render todo correct todo items', () => {
     // TODO 7: implement all todo component tests
     // use helper functions like "getTodoItems()" (find them at the top of the test) to check if component rendered the state correctly
     // eg: correct count of rendered todo items, todo item text, correct filter description based on filter value, ...
+
+    expect(getTodoItems().length).toBe(2);
+    expect(getTodoItemText(0)).toBe('Test 1');
+    expect(getDescription()).toBe('Displaying all todos');
+    expect(getCount()).toBe('2');
+  
   });
+
 
   it('displays correct description based on filter: "DONE"', () => {
     // some tests need other data than provided in the "beforeEach" with "overrideSelector"
