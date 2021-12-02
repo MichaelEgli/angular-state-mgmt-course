@@ -34,11 +34,14 @@ export function selectId(product: Product): number {
   return product.id;
 }
 // TODO 4: define and export "sortComparer" function for the entity adapter, for example sort by product name, which will accept 2 arguments of type product and use "localeCompare" on their "name" property
+export function sortComparer(p1: Product, p2: Product): number {
+  return p1.name.localeCompare(p2.name);
 
+}
 // TODO 5: create entity adapter using "createEntityAdapter" with generic type of "Product" and pass in previously created ID selector and sort function as options
 // use IDE code completion to see what properties need to be passed in the options object
 
-export const adapter: EntityAdapter<Product> = undefined;
+export const adapter: EntityAdapter<Product> = createEntityAdapter<Product>({ selectId, sortComparer });
 
 // TODO 6: use newly created adapter and its "getInitialState" method to create initial state
 // pass in options which specify default value of additional state properties (eg loading, ...)
