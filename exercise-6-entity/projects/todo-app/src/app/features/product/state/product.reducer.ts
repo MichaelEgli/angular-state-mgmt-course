@@ -22,12 +22,17 @@ import {
 export const productFeatureKey = 'product';
 
 // TODO 1: create and export "State" interface that extends "EntityState" (from @ngrx/entity) with a generic type of "Product"
-export interface State {}
-
+export interface State extends EntityState<Product> {
+  loading: boolean;
+  error: string | null;
+  editedProductId: number | null;
+}
 // TODO 2: add additional properties to the "State" interface, "loading" flag, "error" message as string (or null) and "editedProductId" which can be number (or null)
 
 // TODO 3: define and export "selectId" function for the entity adapter which will accept product and return the id property
-
+export function selectId(product: Product): number {
+  return product.id;
+}
 // TODO 4: define and export "sortComparer" function for the entity adapter, for example sort by product name, which will accept 2 arguments of type product and use "localeCompare" on their "name" property
 
 // TODO 5: create entity adapter using "createEntityAdapter" with generic type of "Product" and pass in previously created ID selector and sort function as options
